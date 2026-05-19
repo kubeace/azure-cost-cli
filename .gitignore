@@ -1,0 +1,17 @@
+# Build artifacts
+/azcost
+/azcost-*
+/dist/
+
+# Test / coverage
+/coverage.out
+/coverage.html
+
+# Local config (operator-specific; lives in ~/.config/)
+/azcost.yaml
+/azcost-tags.yaml
+
+# OS / editor
+.DS_Store
+*.swp
+*~

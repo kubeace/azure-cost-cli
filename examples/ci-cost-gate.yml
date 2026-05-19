@@ -1,0 +1,40 @@
+# Example GitHub Action: daily Azure cost snapshot.
+#
+# Builds azcost from source, authenticates via OIDC workload identity,
+# and runs a daily snapshot + diff against the previous day.
+
+name: Azure Cost Snapshot
+on:
+  schedule:
+    - cron: '0 6 * * *'   # daily 06:00 UTC
+  workflow_dispatch:
+
+permissions:
+  id-token: write    # OIDC for azure/login@v2
+  contents: read
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ vars.AZURE_SUBSCRIPTION_ID }}
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.25'
+
+      - name: Install azcost
+        run: go install github.com/kubeace/azure-cost-cli/cmd/azcost@latest
+
+      - name: Snapshot today and diff vs yesterday
+        env:
+          AZCOST_TENANT: ${{ secrets.AZURE_TENANT_ID }}
+        run: |
+          azcost snapshot save --subs ${{ vars.AZURE_SUBSCRIPTION_ID }}
+          azcost diff          --sub  ${{ vars.AZURE_SUBSCRIPTION_ID }} || true

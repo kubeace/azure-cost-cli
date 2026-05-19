@@ -1,0 +1,39 @@
+# azcost config — copy to ~/.config/azcost.yaml and edit.
+#
+# All keys are optional. Precedence: flag > env (AZCOST_*) > this file > built-in default.
+
+# Tenant ID. Set this only if your `az login` covers multiple Entra tenants
+# and the default-selected one isn't the tenant that owns these subscriptions.
+# Symptom of a wrong tenant: `InvalidAuthenticationTokenTenant`.
+# tenant: 00000000-0000-0000-0000-000000000000
+
+# Local-currency-to-USD divisor. 1.0 (default) = passthrough; raw Azure
+# value is shown unchanged. Set this only if your enrollment bills in a
+# non-USD currency and you want a USD-equivalent column.
+#   Example for an India EA (INR-billed):
+#     rate: 89.985
+#     currency: both
+rate: 1.0
+
+# Display columns. USD | local | both.
+#   USD   — single column showing raw / rate, labeled USD
+#   local — single column showing the raw billing-currency value
+#   both  — show both side by side (useful when rate != 1)
+currency: USD
+
+# Max ARM requests/sec. Cost Management throttles aggressively at the
+# billing-account scope but is generous at the subscription scope.
+rps: 5
+
+# Default subscription set for `report`, `subs`, `snapshot save` when
+# --subs is not passed. If unset, those commands fall back to
+# `az account list`.
+# subs:
+#   - 00000000-0000-0000-0000-000000000000   # prod
+#   - 11111111-1111-1111-1111-111111111111   # dev
+
+# Output format. table | md | csv | json (md is the default for `report`).
+# format: table
+
+# Top-N rows. 0 = use per-command default.
+# top: 0

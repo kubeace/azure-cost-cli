@@ -1,0 +1,46 @@
+# azcost-tags.yaml — example tag-map.
+#
+# Loaded automatically when present at ~/.config/azcost-tags.yaml. Override
+# with --tagmap or AZCOST_TAGMAP.
+#
+# Matching is first-match-wins on the resource label (case-insensitive
+# substring for `match`, anchored regex for `match_regex`). Resources
+# matching no rule inherit the `defaults` block and surface as "<unset>"
+# under `azcost tags` / `azcost tag-coverage`.
+#
+# After each edit, run `azcost tag-coverage` to see what spend is still
+# unclassified, then add rules for the largest gaps.
+
+rules:
+  # --- AKS spot nodepools ---
+  - match_regex: "aks-spot.*"
+    tags: {team: platform, env: prod, tier: spot}
+
+  # --- AI / Cognitive Services ---
+  - match_regex: "(openai|cogsvc|whisper|formrecognizer)"
+    tags: {team: ai, env: prod, app: cogsvc}
+
+  # --- Databases ---
+  - match_regex: "(postgres|pg-|mysql|mariadb)"
+    tags: {team: data, env: prod, tier: db}
+  - match_regex: "(redis|cache)"
+    tags: {team: data, env: prod, tier: cache}
+
+  # --- Observability ---
+  - match_regex: "(grafana|loki|prometheus|sentry|signoz|datadog|elastic)"
+    tags: {team: platform-obs, env: prod}
+
+  # --- Edge / CDN / front door ---
+  - match_regex: "(cdn|frontdoor|cloudfront|edge)"
+    tags: {team: frontend, env: prod, tier: edge}
+
+  # --- AKS managed-cluster RGs (load balancers, PVCs, VMSS) ---
+  - match_regex: "^mc_"
+    tags: {team: platform, env: prod, tier: aks-managed}
+
+  # --- Dev / non-prod catch-all ---
+  - match_regex: "(dev|sandbox|test|qa)"
+    tags: {env: dev}
+
+defaults:
+  env: prod
