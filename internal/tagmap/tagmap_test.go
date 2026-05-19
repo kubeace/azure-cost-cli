@@ -103,7 +103,7 @@ rules:
 	if cov.UncoveredINR != 30 {
 		t.Errorf("uncovered INR = %f", cov.UncoveredINR)
 	}
-	if len(cov.Untagged) != 1 || cov.Untagged[0].Label != "a/something-else" {
+	if len(cov.Untagged) != 1 || cov.Untagged[0].Label != "rg-misc/something-else" {
 		t.Errorf("untagged %+v", cov.Untagged)
 	}
 }
