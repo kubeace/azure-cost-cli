@@ -82,10 +82,10 @@ rules:
 `)
 	f, _ := Load(p)
 	rows := []render.CostRow{
-		{Label: "a/tv-azure-openai-01", INR: 100},
-		{Label: "a/tv-au-openai", INR: 50},
-		{Label: "a/tv-postgres-07", INR: 200},
-		{Label: "a/something-else", INR: 30},
+		{Label: "rg-ai/azure-openai-prod-01", INR: 100},
+		{Label: "rg-ai/azure-openai-eu", INR: 50},
+		{Label: "rg-db/postgres-07", INR: 200},
+		{Label: "rg-misc/something-else", INR: 30},
 	}
 
 	g := f.GroupBy(rows, "team")
