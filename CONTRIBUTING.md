@@ -12,7 +12,7 @@ make build
 make test
 ```
 
-Requirements: Go ≥ 1.25, an `az login` session for manual smoke tests.
+Requirements: Go ≥ 1.23, an `az login` session for manual smoke tests.
 
 ## Before opening a PR
 

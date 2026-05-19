@@ -39,7 +39,7 @@ single-file Go binary, no .NET runtime.
 
 ## Install
 
-### From source (one command, requires Go ≥ 1.25)
+### From source (one command, requires Go ≥ 1.23)
 
 ```bash
 go install github.com/kubeace/azure-cost-cli/cmd/azcost@latest

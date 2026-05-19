@@ -27,7 +27,7 @@ jobs:
 
       - uses: actions/setup-go@v5
         with:
-          go-version: '1.25'
+          go-version: '1.23'
 
       - name: Install azcost
         run: go install github.com/kubeace/azure-cost-cli/cmd/azcost@latest
